@@ -1,7 +1,7 @@
 import os
 
-from library.dashboard import app
-#from library.home import app
+#from library.dashboard import app
+from library.home import app
 
 if __name__ == '__main__':
     app.debug = True

@@ -14,9 +14,9 @@ app = Flask(__name__)
 
 
 
-@app.route('/')
+@app.route('/unigrama/')
 def unigrama_dashboard_acuracy():
-    
+
     return render_template('teste_2.html')
 
 @app.route('/bigrama/')
@@ -29,7 +29,7 @@ def bigrama_dashboard(metrics):
     test_dataset = pd.read_excel("pandas_simple.xlsx")
     if metrics in ["Índice Cohen-Kappa", "Matriz de Confusão", "Análise Temporal"]:
         return render_template('bigrama.html', metrica = metrics, test_set = test_dataset, test_size = len(test_dataset))
-        
+
 @app.route('/trigrama/')
 def trigrama_dashboard_acuracy():
     test_dataset = pd.read_excel("pandas_simple.xlsx")
