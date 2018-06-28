@@ -17,12 +17,6 @@
   <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">NewsCrawler</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
-        </li>
-      </ul>
     </nav>
 
     <div class="container-fluid">
@@ -42,12 +36,6 @@
                   Bigrama
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/trigrama">
-                  <span data-feather="file-text"></span>
-                  Trigrama
-                </a>
-              </li>
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -65,16 +53,6 @@
                 {% endif%}
                   <span data-feather="home"></span>
                   Acurácia
-                </a>
-              </li>
-              <li class="nav-item">
-                {% if (metrica == "Matriz de Confusão") %}
-                <a class="nav-link active" href="#">
-                {% else %}
-                <a class="nav-link" href="/bigrama/Matriz de Confusão">
-                {% endif%}
-                  <span data-feather="monitor"></span>
-                  Matriz de Confusão
                 </a>
               </li>
               <li class="nav-item">
@@ -114,35 +92,9 @@
                 This week
               </button>
             </div>
-          </div>
-          {% if metrica == "Matriz de Confusão"%}
-            <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Título</th>
-                  <th>Subtítulo</th>
-                  <th>Texto</th>
-                  <th>Classificação</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for i in range(6)%}
-                <tr>
-                  <td>{{i}}</td>
-                  <td>{{i}}</td>
-                  <td>{{i}}</td>
-                  <td>{{i}}</td>
-                  <td>{{i}}</td>
-                </tr>
-              {% endfor%}
-              </tbody>
-            </table>
-          </div>
-          {% else %}
+          </div>    
           <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-          {% endif %}
+          <canvas class="my-4 w-100" id="myChart1" width="900" height="380"></canvas>
           <h2>Banco de Dados de Teste</h2>
           <div class="table-responsive">
             <table class="table table-striped table-sm">
@@ -189,46 +141,118 @@
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 	 <script>
-        var ctx = document.getElementById("myChart");
-
-        var myChart = new Chart(ctx, {
-          type: 'scatter',
-          data: {
-            datasets: [
-            	{
-                label: '{{ metrica }} X Vocabulário (Centena de Milhar)',
-                data: [{x: 0.2, y: 2}, {x: 0.4, y: 4}, {x: 0.6, y: 8},{x: 0.8, y: 16}],
-                showLine: true,
-                fill: false,
-                borderColor: 'rgba(0, 200, 0, 1)'
-            	},
-              {
-                label: '{{ metrica }} X Dias (Dezena)',
-                data: [{x: 0.1, y: 3}, {x: 0.2, y: 4}, {x: 0.3, y: 6}, {x: 0.4, y: 9}, {x: 0.5, y:10}],
-                    showLine: true,
-                fill: false,
-                borderColor: 'rgba(200, 0, 0, 1)'
-            	}
-            ]
+     // Global parameters:
+    // do not resize the chart canvas when its container does (keep at 600x400px)
+    Chart.defaults.global.responsive = false;
+ 
+    // define the chart data
+    var chartData = {
+      labels : [{% for x in legenda %}
+                   {{ x }},
+                {% endfor %}],
+      datasets : [{
+          label: '{{ metrica }} X Dias',
+          fill: false,
+          lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,  
+          data : [{% for y in dados %}
+                     {{ y }},
+                  {% endfor %}],
+          spanGaps: false
+      }]
+    }
+    var chartData1 = {
+      labels : [{% for x in vocabulario_legenda %}
+                   {{ x }},
+                {% endfor %}],
+      datasets : [{
+          label: '{{ metrica }} X Vocabulario',
+          fill: false,
+          lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,  
+          data : [{% for y in dados_vocabulario %}
+                     {{ y }},
+                  {% endfor %}],
+          spanGaps: false
+      }]
+    }
+ 
+    // get chart canvas
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var ctx1 = document.getElementById("myChart1").getContext("2d");
+ 
+    // create the chart using the chart canvas
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options: {
+          tooltips: {
+             mode: 'index',
+             intersect: false,
           },
-          options: {
-            tooltips: {
-              mode: 'index',
-              intersect: false,
-            },
-            hover: {
-              mode: 'index',
-              intersect: true
-            },
-            scales: {
+          hover: {
+             mode: 'index',
+             intersect: true
+          },
+          scales: {
               yAxes: [{
                 ticks: {
                   beginAtZero:true
                 }
-              }]
-            },
-          }
-        });
+             }]
+          },
+       }
+    });
+      
+    var myChart = new Chart(ctx1, {
+      type: 'line',
+      data: chartData1,
+      options: {
+          tooltips: {
+             mode: 'index',
+             intersect: false,
+          },
+          hover: {
+             mode: 'index',
+             intersect: true
+          },
+          scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+             }]
+          },
+       }
+    });
 	</script>
   </body>
 </html>

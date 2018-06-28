@@ -45,38 +45,45 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <div class=" w3-padding-64">
     <div class="w3-twothird w3-container">
       <h1 style="color: black;">Objetivo</h1>
-      <p>Esse programa web explora sites de notícias e retém informações como conteúdo das notícias,
+      <p style= "text-align: justify;">Esse programa web explora sites de notícias e retém informações como conteúdo das notícias,
         imagens e hiperlinks e os utiliza para preencher um banco de dados que é utilizado posteriormente
         para predição de categorias usando classificadores baseado em probabilidade bayesiana, aprendizagem
         supervisionada e PNL.</p>
     </div>
     <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">Modelo <i>N-gram</i>: O texto é dividido num conjunto de <i>n</i> palavras e a classificação dele é calculada baseada na frequência que as sequências apareceram na categoria</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">As notícias serão categorizadas em 6 classes: Futebol, Política, Economia, Cinema, Celebridades e Cultura.</p>
     </div>
   </div>
 
   <div class="">
     <div class="w3-twothird w3-container">
-      <h1 class="color: black;">Como Funciona</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
-        dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h1 class="color: black;">Projeto</h1>
+      <p>Foi dividido em 3 etapas:</p>
+          <ol>
+              <li>O <i>Web Scrapper</i> que, através de conhecimento prévio da estrutura das páginas a serem lidas, pega informações importante da notícia para classificação por meio da estrutura html do site. Feito em Python</li>
+              <li>Os classificadores de texto, baseado em unigrama e bigrama, que leem as notícias guardadas em um banco de dados após a etapa anterior para predizer a classificação. Feito em Julia</li>
+              <li>Exposição de métricas importantes para identificação da qualidade do classificador neste site. Feito em Python e HTML,CSS,JS</li>
+          </ol>
     </div>
     <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">Com o aumento da quantidade de palavras em uma sequência, aumenta-se a camada de contexto a ser analisada pelo classificador. Logo, espera-se que o aumento de complexidade melhore o desempenho do classificador</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">Métricas Escolhidas: Acurácia (Taxa de Acerto), Índice Kappa (O quão melhor o classificador é em relação a predição aleatória), Tempo de Execução.</p>
     </div>
   </div>
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="color: black;">Database</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum
-        dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h1 class="color: black;"><i>Database</i></h1>
+      <p>Os bancos de dados foram divididos em 2 grupos:</p>
+          <ol>
+              <li>Bancos de Dados para Classificador, que podem ser divididos em <i>datasets</i> de treinamento e <i>datasets</i> de teste.</li>
+              <li>Bancos de Métricas achadas nos testes. São 2: Bancos com dados diários, relativos a cada teste feito; e banco com dados variando o tamanho do banco de treinamento, para análise de evolução de desempenho com o aumento de informação de treinamento.</li>
+          </ol>
     </div>
     <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">Nos gráficos diários, o banco de treinamento usado continha 240 notícias distribuídas igualmente entre as classes. Somente para o trigrama que foi usado um menor, com 90 notícias.</p>
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center" style="border-radius: 18px;">Nos gráficos dependentes de vocabulário, foi usado um banco de testes com 40 notícias e o <i>database</i> de treinamento variou o tamanho para posterior análise.</p>
     </div>
   </div>
 
@@ -85,10 +92,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   <footer id="myFooter">
     <div class="w3-container w3-theme-l2 w3-padding-32">
       <h4>Footer</h4>
-    </div>
-
-    <div class="w3-container w3-theme-l1">
-      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div>
   </footer>
 
